@@ -1,0 +1,91 @@
+<head>
+    <style>
+
+        * {
+            box-sizing: border-box;
+            font-family: Helvetica;
+            text-align: center;
+        }
+
+        body {
+            color: #cccccc;
+            background-color: #222222;
+        }
+
+        h1, form {
+            background-color: #111111;
+        }
+
+        textarea {
+            text-align: left;
+            color: #cccccc;
+            background-color: #222222;
+            resize: horizontal;
+        }
+
+        .bargraph {
+            display: flex;
+            align-items: flex-end;
+            height: 60vh;
+            background-image: repeating-linear-gradient(90deg, #222222, #222222 0.1em, #111111 0.1em, #111111 3.2em);
+        }
+
+        .bar {
+            margin: 0.1em;
+            width: 3em;
+            background-color: gray;
+            border: 0.1em solid #cccccc;
+            text-align: center;
+            max-height: 60vh
+        }
+
+    </style>
+</head>
+
+<body>
+    <h1>75 Words</h1>
+
+    <!-- Skeleton  <div>Columns with 1em width, height = to word count * 0.1em or something like that</div><br /><br /> -->
+    <div class="bargraph">
+        <% @posts.each do |post| %>
+            <a href="<%= post_path(post) %>">
+                <div class="bar" style="height: <%= (post.wordcount * 0.1) + 1 %>em; background-image: linear-gradient(#cccccc 1.1em, #<%= SecureRandom.hex(3) %> 1.1em)"><%= post.wordcount %></div>
+            </a>
+        <% end %>
+    </div>
+   
+    
+    <br /> <!-- Skeleton new post goes down here<br /> -->
+    <%= form_with model: @post do |form| %>
+        <div>
+            <% visualcount = 0; %>
+            <%= form.label :body, "Write here!" %><br>
+            <%= form.text_area :body, size: "40x10", onkeyup: visualcount = visualcount + 1  %>
+        </div>
+
+        <div id="countDisplay"> 0
+            <!-- <%= form.label :wordcount %> -->
+            <!-- <%= form.hidden_field :wordcount, value: 4 %> -->
+        </div>
+
+        <div>
+            <%= form.submit "POST" %>
+        </div>
+
+        <script>
+            function count_word( val ) {
+                bodyCount = val.split(" ").filter(Boolean).length;
+                return { bodyCount };
+            }
+
+            var textCounter = document.getElementById("post_body")
+            var countShower = document.getElementById("countDisplay")
+
+            textCounter.addEventListener("input", function() {
+                var finalCount = count_word( this.value );
+                countShower.innerHTML = ( finalCount.bodyCount ); 
+            }, false);
+        </script>
+    <% end %>
+
+</body>
