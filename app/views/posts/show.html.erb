@@ -1,12 +1,12 @@
 <body>
     <% date = @post.created_at.to_s.split(" ")[0] %>
-    <h1><%= date %></h1>
-
+    <div class="containerbox"><h1><%= date %></h1></div>
+    <br />
     <div class="containerbox"><p><%= @post.body %></p></div>
 
     <div class="buttonbar">
         <%= link_to "Destroy", post_path(@post), method: :delete, data: { confirm: "Are you sure?" } %>
-
+        
         <%= link_to "Home", root_path("index") %>
     </div>
 </body>
