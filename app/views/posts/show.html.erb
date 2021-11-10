@@ -1,26 +1,12 @@
-<head>
-    <style>
-        * {
-            font-family: Helvetica;
-        }
-
-        body {
-            color: #cccccc;
-            background-color: #222222;
-        }
-
-        a {
-            color: #ccaacc;
-        }
-    </style>
-</head>
 <body>
     <% date = @post.created_at.to_s.split(" ")[0] %>
     <h1><%= date %></h1>
 
-    <p><%= @post.body %></p>
+    <div class="containerbox"><p><%= @post.body %></p></div>
 
-    <%= link_to "Destroy", post_path(@post), method: :delete, data: { confirm: "Are you sure?" } %><br /><br />
+    <div class="buttonbar">
+        <%= link_to "Destroy", post_path(@post), method: :delete, data: { confirm: "Are you sure?" } %>
 
-    <%= link_to "Home", root_path("index") %>
+        <%= link_to "Home", root_path("index") %>
+    </div>
 </body>
